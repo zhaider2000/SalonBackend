@@ -90,4 +90,16 @@ module.exports=class Account{
         }
     }
 
+    static async getSalonNames(req,res,next){
+        try {
+
+            const names=await  salonModel.getSalonNames()
+
+            res.json(names)
+            
+        } catch (error) {
+                console.log(error)
+        }
+    }
+
 }

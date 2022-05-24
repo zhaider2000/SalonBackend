@@ -1,6 +1,7 @@
 const salon=require('../../Models/salon')
 const bcrypt=require('bcrypt')
 const dotenv=require("dotenv")
+const salonModel = require( '../../Models/salon' )
 
 
 dotenv.config({ path:'./secrets.env'})
@@ -103,6 +104,16 @@ module.exports=class SalonModel{
         } catch (error) {
 
             return false
+        }
+    }
+
+    static async getSalonNames(){
+        try {
+
+            const names= await salonModel.find({},{name:1})
+            return names
+        } catch (error) {
+                console.log(error)
         }
     }
 

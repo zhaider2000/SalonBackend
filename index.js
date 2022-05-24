@@ -16,6 +16,7 @@ app.use(require('./Apis/Routes/user_route'))
 app.use(require('./Apis/Routes/salon_service_route'))
 app.use(require('./Apis/Routes/availed_service_route'))
 app.use(require('./Apis/Routes/reviews_route'))
+app.use(require('./Apis/Routes/product_route'))
 
 
 app.use(bodyParser.urlencoded({ extended: true }));

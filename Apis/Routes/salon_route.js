@@ -9,5 +9,6 @@ router.post("/salon",salonController.createSalon)
 router.put("/salon",salonController.updateSalon)
 router.get("/LoginSalon",salonController.loginSalon)
 router.get('/AllSalon',salonController.getAllSalon)
+router.get('/SalonNames',salonController.getSalonNames)
 
 module.exports=router
