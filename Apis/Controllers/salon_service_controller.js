@@ -30,7 +30,7 @@ module.exports=class ServicesController{
     static async getServices(req,res,next){
         try {
 
-            let salonServices=await servicesService.getServices(req.body.id)
+            let salonServices=await servicesService.getServices(req.query.id)
 
             if(salonServices==false){
                 res.json({message:"no services available right now"})
@@ -44,4 +44,69 @@ module.exports=class ServicesController{
         }
     }
 
+    static async getActiveServices(req,res,next){
+        try {
+            console.log(req.query)
+            let activeServices=await servicesService.getActiveServices(req.query.id)
+            if(activeServices==false){
+                res.json({message:"no services available right now"})
+            }
+            else{
+                console.log("active Services",activeServices)
+                res.json(activeServices)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    static async getDropServices(req,res,next){
+        try {
+            console.log(req.query)
+            let dropServices=await servicesService.getDropServices(req.query.id)
+            if(dropServices==false){
+                res.json({message:"no services available right now"})
+            }
+            else{
+                console.log("active Services",dropServices)
+                res.json(dropServices)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
+    static async dropActiveService(req,res,next){
+        try {
+
+            const update=await servicesService.dropService(req.body.id)
+            if(update){
+                res.json({message:"service dropped"});
+
+            }
+            else{
+                res.json({message:"fail"})
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
+    static async activeDropService(req,res,next){
+        try {
+
+            const update=await servicesService.activeService(req.body.id)
+            if(update){
+                res.json({message:"service active"});
+
+            }
+            else{
+                res.json({message:"fail"})
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }

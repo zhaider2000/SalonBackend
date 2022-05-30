@@ -21,6 +21,10 @@ const service=new mongoose.Schema({
     amount:{
         type:Number,
         required:true
+    },
+    Status:{
+        type:String,
+        default:"Active"
     }
 
 })

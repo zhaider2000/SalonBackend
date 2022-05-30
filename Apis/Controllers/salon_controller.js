@@ -1,7 +1,7 @@
 "use strict"
 const salonModel=require('../Services/salon_service')
-
-
+const sendEmail=require('../../email_verification')
+const sendReqEmail=require('../../email_request')
 module.exports=class Account{
 
     static async createSalon(req,res,next){
@@ -17,7 +17,9 @@ module.exports=class Account{
             }
 
             if(newSalon==true){
-                res.json({message:"success"}) //if true salon is created succesfully
+                res.json({message:"success"})
+                await sendEmail(req.body.email,req.body.password)
+                 //if true salon is created succesfully
             }
             
             if(newSalon==false){
@@ -101,5 +103,83 @@ module.exports=class Account{
                 console.log(error)
         }
     }
+
+
+    static async requestSalon(req,res,next){
+        try {
+
+            await sendReqEmail(req.body)
+            res.json({message:"your application has been send to our dept . please wait till it is verified"})
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    static async getSalonByCity(req,res,next){
+        try {
+            const city=req.query.city
+            const citySalons=await salonModel.getSalonByCity(city)
+            if(citySalons.length!=0){
+                res.json(citySalons)
+            }
+            else{
+                res.json({message:"No salon exist at this city"})
+            }
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    static async getSalonByGender(req,res,next){
+        try {
+            const gender=req.query.gender
+            const genderSalons=await salonModel.getSalonByGender(gender)
+            if(genderSalons.length!=0){
+                res.json(genderSalons)
+            }
+            else{
+                res.json({message:"No salon exist for this gender"})
+            }
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    static async getSalonByCategory(req,res,next){
+        try {
+            const category=req.query.category
+            console.log(category)
+            const categorySalons=await salonModel.getSalonByCategory(category)
+            if(categorySalons.length!=0){
+                res.json(categorySalons)
+            }
+            else{
+                res.json({message:"No salon exist for this category"})
+            }
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
+ 
+    static async getSalonById(req,res,next){
+        try {
+            const salon=req.query.id
+            console.log(salon,"salon id")
+            console.log(salon)
+            const salonInfo=await salonModel.getSalonById(salon)
+            if(salonInfo){
+                res.json(salonInfo)
+            }
+            else{
+                res.json({message:"No salon exist"})
+            }
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    
 
 }

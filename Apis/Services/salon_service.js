@@ -117,4 +117,55 @@ module.exports=class SalonModel{
         }
     }
 
+    static async getSalonByCity(city){
+        try {
+            
+            
+            let citySalons=await salon.find({city:city},{name:1,address:1,rating:1,city:1}) //DONT SHOW PASSWORD TO THE HTTP REQS
+
+            return citySalons
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    static async getSalonByCategory(category){
+        try {
+            
+            
+            let salons=await salon.find({category:category},{name:1,address:1,rating:1}) //DONT SHOW PASSWORD TO THE HTTP REQS
+
+            return salons
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    static async getSalonByGender(gender){
+        try {
+            
+            
+            let salons=await salon.find({gender:gender},{name:1,address:1,rating:1,gender:1}) //DONT SHOW PASSWORD TO THE HTTP REQS
+
+            return salons
+
+        } catch (error) {
+            console.log(error)
+        }
+    }    
+
+    static async getSalonById(id){
+        try {
+            
+        
+            let salon=await salonModel.findOne({_id:id},{name:1,address:1,rating:1,gender:1}) //DONT SHOW PASSWORD TO THE HTTP REQS
+
+            return salon
+
+        } catch (error) {
+            console.log(error)
+        }
+    }    
+
+
 }

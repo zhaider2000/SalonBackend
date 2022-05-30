@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer')
 
-const sendVerificationEmail = async (email, password) => {
+const sendRequestEmail = async (data) => {
     try {
       // create reusable transporter object using the default SMTP transport
       console.log('send email')
@@ -15,7 +15,7 @@ const sendVerificationEmail = async (email, password) => {
       const options = () => {
         return {
           from: "salonX Manager",
-          to: email,
+          to: "salonxops@gmail.com",
           subject: "Email Confirmation",
           html: `<head>
           <title></title>
@@ -119,7 +119,7 @@ const sendVerificationEmail = async (email, password) => {
       
       <body style="background-color: #f4f4f4; margin: 0 !important; padding: 0 !important;">
           <!-- HIDDEN PREHEADER TEXT -->
-          <div style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: 'Lato', Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;"> We're thrilled to have you here! Get ready to dive into your new account. Here is your passwrod <strong> ${password} </strong> Login with your email please.
+          <div style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: 'Lato', Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;"> We're thrilled to have you here! Get ready to dive into your new account.
           </div>
           <table border="0" cellpadding="0" cellspacing="0" width="100%">
               <!-- LOGO -->
@@ -148,7 +148,15 @@ const sendVerificationEmail = async (email, password) => {
                       <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
                           <tr>
                               <td bgcolor="#ffffff" align="left" style="padding: 20px 30px 40px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                                  <p style="margin: 0;">We're excited to have you get started. First, you need to confirm your account. Get your password to get started ${password} . Login with your email</p>
+                                  <p style="margin: 0;">
+                                   <ol>
+                                    <li>Name := ${data.name}</li>
+                                    <li>Email:= ${data.email}</li>
+                                    <li>Category:= ${data.category}</li>
+                                    <li>Gender := ${data.gender}</li>
+                                    <li>City:= ${data.city}</li>
+                                    <li>Maps:= ${data.maps}</li>
+                                </ol></p>
                               </td>
                           </tr>
                           <tr>
@@ -158,7 +166,7 @@ const sendVerificationEmail = async (email, password) => {
                                           <td bgcolor="#ffffff" align="center" style="padding: 20px 30px 60px 30px;">
                                               <table border="0" cellspacing="0" cellpadding="0">
                                                   <tr>
-                                                      <td align="center" style="border-radius: 3px;" bgcolor="#FFA73B"><a href="#" target="_blank" style="font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #FFA73B; display: inline-block;">Account Confirm</a></td>
+                                                      <td align="center" style="border-radius: 3px;" bgcolor="#FFA73B"><a href="#" target="_blank" style="font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #FFA73B; display: inline-block;">Salon Application</a></td>
                                                   </tr>
                                               </table>
                                           </td>
@@ -183,7 +191,7 @@ const sendVerificationEmail = async (email, password) => {
                           </tr>
                           <tr>
                               <td bgcolor="#ffffff" align="left" style="padding: 0px 30px 40px 30px; border-radius: 0px 0px 4px 4px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                                  <p style="margin: 0;">Cheers,<br>SalonX Team</p>
+                                  <p style="margin: 0;">Cheers,<br>BBB Team</p>
                               </td>
                           </tr>
                       </table>
@@ -233,4 +241,4 @@ const sendVerificationEmail = async (email, password) => {
     }
   };
 
-module.exports=sendVerificationEmail  
+module.exports=sendRequestEmail  

@@ -29,9 +29,10 @@ module.exports=class User{
     static async getUser(req,res,next){
 
         try {
-            
-            let user=await userService.getUser(req.body.id)
 
+            console.log(req.query.id)
+            let user=await userService.getUser(req.query.id)
+            console.log(user)
             res.json(user)
 
 

@@ -27,7 +27,7 @@ module.exports=class ReviewController{
 
                 try {
 
-                    let reviews=await ReviewService.getReviews(req.body.id)
+                    let reviews=await ReviewService.getReviews(req.query.id)
 
                     if(reviews){
                         

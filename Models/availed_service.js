@@ -25,6 +25,12 @@ const AvailedService=new mongoose.Schema({
     slot:{
         type:String,
         required:true
+    },
+
+    status:{
+        type:String,
+        required:true,
+        default:'Active'
     }
 
 })
