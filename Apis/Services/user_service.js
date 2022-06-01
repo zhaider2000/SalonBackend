@@ -33,4 +33,22 @@ module.exports=class UserService{
         }
     }
 
+    static async updateUser(id,name,email,phone){
+        try {
+
+            let userUpdate= await user.findByIdAndUpdate({_id:id},{
+                name:name,
+                email:email,
+                phone:phone,
+            })
+
+
+            return true
+
+        } catch (error) {
+            console.log(error)
+            return false
+        }
+    }
+
 }

@@ -52,11 +52,11 @@ module.exports=class SalonModel{
     }
 
 
-    static async updateSalon(body){
+    static async updateSalon(id,body){
 
         try {
 
-            const {id,name,city,address}=body
+            const {name,city,address}=body
 
             let updateSalon=await salon.findByIdAndUpdate({_id:id},{
                 name:name,

@@ -44,4 +44,26 @@ module.exports=class User{
 
     }
 
+    static async updateUser(req,res,next){
+
+        try {
+
+            console.log(req.query.id)
+            const {email,name,phone}=req.body
+            let user=await userService.updateUser(req.query.id,name,email,phone)
+            if(user==true){
+                res.json({message:"User updated Succesfully"})
+            }else{
+                res.json({message:"fail"})
+            }
+
+
+        } catch (error) {
+            
+            console.log(error)
+
+        }
+
+    }
+
 }

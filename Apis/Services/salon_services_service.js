@@ -128,4 +128,22 @@ module.exports=class ServicesService{
         }
     }
 
+    static async updateService(id,name,description,amount,duration){
+        try {
+
+            const serviceUpdate=await serviceModel.findByIdAndUpdate({_id:id},{
+                name:name,
+                description:description,
+                amount:amount,
+                duration:duration
+            })
+
+            return true
+
+        } catch (error) {
+            console.log(error)
+            return false
+        }
+    }
+
 }

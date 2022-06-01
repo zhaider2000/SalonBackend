@@ -109,4 +109,22 @@ module.exports=class ServicesController{
             console.log(error)
         }
     }
+
+    static async updateService(req,res,next){
+        try {
+
+            const {name,description,amount,duration}=req.body
+
+            const updateSevice=await servicesService.updateService(req.query.id,name,description,amount,duration)
+            
+            if(updateSevice==true){
+                res.json({message:"Service updated sucessfully"})
+            }else{
+                res.json({message:"fail"})
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }

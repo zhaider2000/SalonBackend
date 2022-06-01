@@ -52,7 +52,8 @@ module.exports=class Account{
 
         try {
 
-            let updateSalon=await salonModel.updateSalon(req.body)
+            
+            let updateSalon=await salonModel.updateSalon(req.query.id,req.body)
 
             console.log(updateSalon)
 
