@@ -1,7 +1,7 @@
 "use strict";
 
 const availedService = require("../Services/availed_service_service");
-const http = require("http");
+const https = require("https");
 module.exports = class AvailedServic {
   static async createAvailedService(req, res, next) {
     try {
@@ -11,7 +11,7 @@ module.exports = class AvailedServic {
 
       if (newAvailedService == true) {
         res.json({ messsage: "sucess" });
-        http.get(
+        https.get(
           "https://shielded-fortress-42931.herokuapp.com//SendNotification"
         );
       }
