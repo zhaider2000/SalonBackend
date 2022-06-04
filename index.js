@@ -4,7 +4,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const http = require("http");
 // const port = 3000;
-const port = process.env.port || 3000;
+const PORT = process.env.PORT || 3000;
 const app = express();
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
@@ -29,6 +29,6 @@ app.get("/", (req, res) => {
 //   console.log(`Example app listening on port ${port}`);
 // });
 // app.listen(process.env.port || 5000);
-const server = http.createServer(app).listen(port, () => {
-  console.log("Server is running at", { port });
+const server = http.createServer(app).listen(PORT, () => {
+  console.log("Server is running at", { PORT });
 });
