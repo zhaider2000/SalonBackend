@@ -8,6 +8,7 @@ module.exports = class ReviewControllerr {
 
       let newReview = await ReviewService.createReview(req.body);
       console.log("Here ata review2");
+      console.log(newReview);
 
       if (newReview == true) {
         res.json({ message: "success" });
