@@ -4,9 +4,10 @@ const ReviewService = require("../Services/reviews_service");
 module.exports = class ReviewController {
   static async createReview(req, res, next) {
     try {
-      conosle.log("Here ata review");
+      console.log("Here ata review");
 
       let newReview = await ReviewService.createReview(req.body);
+      console.log("Here ata review2");
 
       if (newReview == true) {
         res.json({ message: "success" });
