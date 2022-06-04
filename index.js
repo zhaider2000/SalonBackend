@@ -3,8 +3,8 @@ require("./db_integration");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 
-const port = 3000;
-const port = process.env.port || 5000;
+// const port = 3000;
+const port = process.env.port || 3000;
 const app = express();
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
