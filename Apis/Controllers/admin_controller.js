@@ -1,5 +1,5 @@
 "use strict";
-const AdminService = require("../services/admin_service.js");
+const AdminService = require("../Services/admin_service.js");
 
 module.exports = class Admin {
   static async create_admin(req, res, next) {
