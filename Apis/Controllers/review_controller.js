@@ -1,7 +1,7 @@
 "use strict";
-const ReviewService = require("../Services/reviews_service");
+const ReviewService = require("../Services/reviews_service.js");
 
-module.exports = class ReviewService {
+module.exports = class ReviewControllerr {
   static async createReview(req, res, next) {
     try {
       console.log("Here ata review");
