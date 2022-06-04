@@ -1,76 +1,76 @@
-const reviewModel=require('../../Models/reviews')
-const salonModel=require('../../Models/salon')
+const reviewModel = require("../../Models/reviews");
+const salonModel = require("../../Models/salon");
 
-module.exports=class ReviewService{
+module.exports = class ReviewService {
+  static async createReview(body) {
+    try {
+      conosle.log("REVIEWS");
 
-    static async createReview(body){
+      const { rating, text, salons } = body;
+      console.log(rating);
+      console.log(text);
+      console.log(salons);
 
-            try {
+      let reviewExist = await reviewModel.findOne({ salons: salons });
 
-                const{rating,text,salons}=body
+      if (reviewExist) {
+        let updateCount = reviewExist.count + 1;
 
-                let reviewExist=await reviewModel.findOne({salons:salons})
+        let updateTotal = reviewExist.total + rating;
 
-                if(reviewExist){
+        let updatedRating = (updateTotal / updateCount).toFixed(1);
 
-                    let updateCount=reviewExist.count+1
+        let updateReview = await reviewModel.findOneAndUpdate(
+          { salons: salons },
+          {
+            count: updateCount,
+            total: updateTotal,
+            $push: { texts: text, individualRatings: rating },
+          }
+        );
+        let updateSalon = await salonModel.findByIdAndUpdate(salons, {
+          rating: updatedRating,
+        });
 
-                    let updateTotal=reviewExist.total + rating
+        return true;
+      }
+      if (!reviewExist) {
+        let arrayOfRating = [rating];
 
-                    let updatedRating=(updateTotal/updateCount).toFixed(1)
+        let arrayOfText = [text];
 
-                    let updateReview=await reviewModel.findOneAndUpdate({salons:salons},
-                        {
-                            count:updateCount,
-                            total:updateTotal,
-                            $push:{texts:text,individualRatings:rating}
-                        }
+        let newReview = new reviewModel({
+          salons,
+          count: 1,
+          total: rating,
+          texts: arrayOfText,
+          individualRatings: arrayOfRating,
+        });
 
-                        )
-                    let updateSalon=await salonModel.findByIdAndUpdate(salons,{rating:updatedRating})        
+        await newReview.save();
 
-                    return true
-                
-                }
-                if(!reviewExist){
+        let updateSalon = await salonModel.findByIdAndUpdate(salons, {
+          rating: rating,
+        });
 
-                    let arrayOfRating=[rating]
-
-                    let arrayOfText=[text]
-                    
-                    let newReview=new reviewModel({salons,count:1,total:rating,texts:arrayOfText,individualRatings:arrayOfRating})
-
-                    await newReview.save()
-
-                    let updateSalon=await salonModel.findByIdAndUpdate(salons,{rating:rating})
-
-                    return true
-
-                }
-
-                
-            } catch (error) {
-                
-                return false
-                
-            }
-
+        return true;
+      }
+    } catch (error) {
+      return false;
     }
+  }
 
-    static async getReviews(id){
-        try {
-            
-            let reviews=await reviewModel.findOne({salons:id})
+  static async getReviews(id) {
+    try {
+      let reviews = await reviewModel.findOne({ salons: id });
 
-            if(reviews.total){
-                return reviews
-            }
-            else{
-                return false
-            }
-
-        } catch (error) {
-                return false
-        }
+      if (reviews.total) {
+        return reviews;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      return false;
     }
-}
+  }
+};
