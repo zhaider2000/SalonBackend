@@ -2,7 +2,7 @@ const express = require("express");
 require("./db_integration");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-
+const http = require("http");
 // const port = 3000;
 const port = process.env.port || 3000;
 const app = express();
@@ -28,4 +28,7 @@ app.get("/", (req, res) => {
 // app.listen(port, () => {
 //   console.log(`Example app listening on port ${port}`);
 // });
-app.listen(process.env.port || 5000);
+// app.listen(process.env.port || 5000);
+const server = http.createServer(app).listen(port, () => {
+  console.log("Server is running at", { port });
+});
