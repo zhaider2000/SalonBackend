@@ -1,23 +1,23 @@
-const nodemailer = require('nodemailer')
+const nodemailer = require("nodemailer");
 
 const sendVerificationEmail = async (email, password) => {
-    try {
-      // create reusable transporter object using the default SMTP transport
-      console.log('send email')
-      const transporter = nodemailer.createTransport({
-        service: "Gmail",
-        auth: {
-          user: "salonxmanager@gmail.com",
-          pass: "nutella1052islove", // naturally, replace both with your real credentials or an application-specific password
-        },
-      });
-  
-      const options = () => {
-        return {
-          from: "salonX Manager",
-          to: email,
-          subject: "Email Confirmation",
-          html: `<head>
+  try {
+    // create reusable transporter object using the default SMTP transport
+    console.log("send email");
+    const transporter = nodemailer.createTransport({
+      service: "Gmail",
+      auth: {
+        user: "salonxmanager@gmail.com",
+        pass: "nutella1052islove", // naturally, replace both with your real credentials or an application-specific password
+      },
+    });
+
+    const options = () => {
+      return {
+        from: "salonX Manager",
+        to: email,
+        subject: "Email Confirmation",
+        html: `<head>
           <title></title>
           <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -124,7 +124,7 @@ const sendVerificationEmail = async (email, password) => {
           <table border="0" cellpadding="0" cellspacing="0" width="100%">
               <!-- LOGO -->
               <tr>
-                  <td bgcolor="#FFA73B" align="center">
+                  <td bgcolor="purple" align="center">
                       <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
                           <tr>
                               <td align="center" valign="top" style="padding: 40px 10px 40px 10px;"> </td>
@@ -133,7 +133,7 @@ const sendVerificationEmail = async (email, password) => {
                   </td>
               </tr>
               <tr>
-                  <td bgcolor="#FFA73B" align="center" style="padding: 0px 10px 0px 10px;">
+                  <td bgcolor="purple" align="center" style="padding: 0px 10px 0px 10px;">
                       <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
                           <tr>
                               <td bgcolor="#ffffff" align="center" valign="top" style="padding: 40px 20px 20px 20px; border-radius: 4px 4px 0px 0px; color: #111111; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 48px; font-weight: 400; letter-spacing: 4px; line-height: 48px;">
@@ -158,7 +158,7 @@ const sendVerificationEmail = async (email, password) => {
                                           <td bgcolor="#ffffff" align="center" style="padding: 20px 30px 60px 30px;">
                                               <table border="0" cellspacing="0" cellpadding="0">
                                                   <tr>
-                                                      <td align="center" style="border-radius: 3px;" bgcolor="#FFA73B"><a href="#" target="_blank" style="font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #FFA73B; display: inline-block;">Account Confirm</a></td>
+                                                      <td align="center" style="border-radius: 3px;" bgcolor="purple"><a href="#" target="_blank" style="font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid purple; display: inline-block;">Account Confirm</a></td>
                                                   </tr>
                                               </table>
                                           </td>
@@ -173,7 +173,7 @@ const sendVerificationEmail = async (email, password) => {
                           </tr> <!-- COPY -->
                           <tr>
                               <td bgcolor="#ffffff" align="left" style="padding: 20px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                                  <p style="margin: 0;"><a href="#" target="_blank" style="color: #FFA73B;">https://bit.li.utlddssdstueincx</a></p>
+                                  <p style="margin: 0;"><a href="#" target="_blank" style="color: purple;">https://bit.li.utlddssdstueincx</a></p>
                               </td>
                           </tr>
                           <tr>
@@ -195,7 +195,7 @@ const sendVerificationEmail = async (email, password) => {
                           <tr>
                               <td bgcolor="#FFECD1" align="center" style="padding: 30px 30px 30px 30px; border-radius: 4px 4px 4px 4px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
                                   <h2 style="font-size: 20px; font-weight: 400; color: #111111; margin: 0;">Need more help?</h2>
-                                  <p style="margin: 0;"><a href="#" target="_blank" style="color: #FFA73B;">We&rsquo;re here to help you out</a></p>
+                                  <p style="margin: 0;"><a href="#" target="_blank" style="color: purple;">We&rsquo;re here to help you out</a></p>
                               </td>
                           </tr>
                       </table>
@@ -214,23 +214,23 @@ const sendVerificationEmail = async (email, password) => {
               </tr>
           </table>
       </body>`,
-        };
       };
-  
-      // Send email
-      transporter.sendMail(options(), (error, info) => {
-        if (error) {
-          return error;
-        } else {
-          console.log('success')
-          return res.status(200).json({
-            success: true,
-          });
-        }
-      });
-    } catch (error) {
-      return error;
-    }
-  };
+    };
 
-module.exports=sendVerificationEmail  
+    // Send email
+    transporter.sendMail(options(), (error, info) => {
+      if (error) {
+        return error;
+      } else {
+        console.log("success");
+        return res.status(200).json({
+          success: true,
+        });
+      }
+    });
+  } catch (error) {
+    return error;
+  }
+};
+
+module.exports = sendVerificationEmail;
