@@ -12,7 +12,7 @@ module.exports = class AvailedServic {
       if (newAvailedService == true) {
         res.json({ messsage: "sucess" });
         https.get(
-          "https://shielded-fortress-42931.herokuapp.com//SendNotification"
+          "https://shielded-fortress-42931.herokuapp.com/SendNotification"
         );
       }
 
