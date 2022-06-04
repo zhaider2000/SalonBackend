@@ -1,149 +1,149 @@
-const serviceModel=require('../../Models/salon_services')
+const serviceModel = require("../../Models/salon_services");
 
-module.exports=class ServicesService{
+module.exports = class ServicesService {
+  static async createService(body) {
+    try {
+      const { salon, name, description, duration, amount } = body;
 
-    static async createService(body){
+      console.log(salon, name, description, duration, amount);
 
-        try {
+      let newService = new serviceModel({
+        salon,
+        name,
+        description,
+        duration,
+        amount,
+      });
 
-            const {salon,name,description,duration,amount}=body
+      await newService.save();
 
-            console.log(salon,name,description,duration,amount)
-
-            let newService=new serviceModel({salon,name,description,duration,amount})
-
-            await newService.save()
-
-            return true
-            
-        } catch (error) {
-            
-            return false
-        }
+      return true;
+    } catch (error) {
+      return false;
     }
+  }
 
-    static async getServices(id){
-
-        try {
-
-            console.log(id)
-            console.log("here at services")
-            let services=await serviceModel.find({salon:id}).populate("salon",{name:1,city:1,address:1})
-            console.log("services:=",services)
-            if(services.length!=0){
-                return services
-            }
-            else{
-                return false
-            }
-            
-            
-        } catch (error) {
-            return false
-        }
+  static async getServices(id) {
+    try {
+      console.log(id);
+      console.log("here at services");
+      let services = await serviceModel
+        .find({ salon: id })
+        .populate("salon", { name: 1, city: 1, address: 1 });
+      console.log("services:=", services);
+      if (services.length != 0) {
+        return services;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      return false;
     }
+  }
 
-    static async getActiveServices(id){
+  static async getActiveServices(id) {
+    try {
+      console.log(id);
 
-        try {
+      let services = await serviceModel.find({
+        $and: [{ salon: id }, { Status: "Active" }],
+      });
 
-            console.log(id)
-
-            let services=await serviceModel.find({$and :[{salon:id},{Status:'Active'}]})
-            
-            if(services.length!=0){
-                return services
-            }
-            else{
-                return false
-            }
-            
-            
-        } catch (error) {
-            return false
-        }
+      if (services.length != 0) {
+        return services;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      return false;
     }
+  }
 
-    static async getDropServices(id){
+  static async getDropServices(id) {
+    try {
+      console.log(id);
 
-        try {
+      let services = await serviceModel.find({
+        $and: [{ salon: id }, { Status: "Drop" }],
+      });
 
-            console.log(id)
-
-            let services=await serviceModel.find({$and :[{salon:id},{Status:'Drop'}]})
-            
-            if(services.length!=0){
-                return services
-            }
-            else{
-                return false
-            }
-            
-            
-        } catch (error) {
-            return false
-        }
+      if (services.length != 0) {
+        return services;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      return false;
     }
+  }
 
-    
-    static async dropService(id){
+  static async dropService(id) {
+    try {
+      console.log(id);
 
-        try {
+      let services = await serviceModel.findOneAndUpdate(
+        { _id: id },
+        { Status: "Drop" }
+      );
 
-            console.log(id)
-
-            let services=await serviceModel.findOneAndUpdate({_id:id},{Status:'Drop'})
-            
-            if(services){
-                return services
-            }
-            else{
-                return false
-            }
-            
-            
-        } catch (error) {
-            return false
-        }
+      if (services) {
+        return services;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      return false;
     }
+  }
 
-    static async activeService(id){
+  static async activeService(id) {
+    try {
+      console.log(id);
 
-        try {
-
-            console.log(id)
-
-            let services=await serviceModel.findOneAndUpdate({_id:id},{Status:'Active'})
-            console.log(services)
-            if(services){
-                return services
-            }
-            else{
-                return false
-            }
-            
-            
-        } catch (error) {
-            return false
-        }
+      let services = await serviceModel.findOneAndUpdate(
+        { _id: id },
+        { Status: "Active" }
+      );
+      console.log(services);
+      if (services) {
+        return services;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      return false;
     }
+  }
 
-    static async updateService(id,name,description,amount,duration){
-        try {
+  static async updateService(data) {
+    try {
+      let id = data._id;
+      console.log(data.address);
+      console.log(id);
 
-            const serviceUpdate=await serviceModel.findByIdAndUpdate({_id:id},{
-                name:name,
-                description:description,
-                amount:amount,
-                duration:duration
-            })
-
-            return true
-
-        } catch (error) {
-            console.log(error)
-            return false
+      const serviceUpdate = await serviceModel.findByIdAndUpdate(
+        { _id: id },
+        {
+          name: data.name,
+          description: data.description,
+          amount: data.amount,
+          duration: data.duration,
         }
-    }
+      );
 
-}
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+  static async deleteService(data) {
+    try {
+      console.log(data, "deleteee");
+      const deleteSalon = await serviceModel.deleteMany({ _id: data._id });
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+};

@@ -1,92 +1,83 @@
-'use strict'
+"use strict";
 
-const availedService=require('../Services/availed_service_service')
+const availedService = require("../Services/availed_service_service");
+const http = require("http");
+module.exports = class AvailedServic {
+  static async createAvailedService(req, res, next) {
+    try {
+      let newAvailedService = await availedService.createAvailedService(
+        req.body
+      );
 
-module.exports=class AvailedServic{
+      if (newAvailedService == true) {
+        res.json({ messsage: "sucess" });
+        http.get("http://localhost:3000/SendNotification");
+      }
 
-    static async createAvailedService(req,res,next){
-
-        try {
-
-            let newAvailedService=await availedService.createAvailedService(req.body)
-
-            if(newAvailedService==true){
-                res.json({messsage:"sucess"})
-            }
-
-            if(availedService==false){
-
-                res.json({messsage:"fail"})
-            }
-
-            
-        } catch (error) {
-
-            console.log(error)
-        }
-
+      if (availedService == false) {
+        res.json({ messsage: "fail" });
+      }
+    } catch (error) {
+      console.log(error);
     }
+  }
 
+  static async getUserAvailedServices(req, res, nex) {
+    try {
+      console.log("userr", req.query.id);
 
-    static async getUserAvailedServices(req,res,nex){
+      let userServices = await availedService.getUserAvailedServices(
+        req.query.id,
+        req.query.filter
+      );
 
-        try {
-            console.log("userr",req.query.id)
-        
-            let userServices=await availedService.getUserAvailedServices(req.query.id,req.query.filter)
+      if (userServices == false) {
+        res.json({ messsage: "no availed services / error" });
+      }
 
-            if(userServices==false){
-                res.json({messsage:"no availed services / error"})
-            }
-            
-            if(userServices){
-                res.json(userServices)
-            }
-            
-        } catch (error) {
-                console.log(error)
-        }
+      if (userServices) {
+        res.json(userServices);
+      }
+    } catch (error) {
+      console.log(error);
     }
+  }
 
-    static async getSalonAvailedServices(req,res,nex){
+  static async getSalonAvailedServices(req, res, nex) {
+    try {
+      console.log("salon", req.query.id);
+      console.log(req.query.id, req.query.filter);
+      let salonServices = await availedService.getSalonAvailedServices(
+        req.query.id,
+        req.query.filter
+      );
 
-        try {
+      if (salonServices == false) {
+        res.json({ messsage: "no availed services / error" });
+      }
 
-            console.log(req.query.id,req.query.filter)
-            let salonServices=await availedService.getSalonAvailedServices(req.query.id,req.query.filter)
-
-            if(salonServices==false){
-                res.json({messsage:"no availed services / error"})
-            }
-            
-            if(salonServices){
-                res.json(salonServices)
-            }
-            
-        } catch (error) {
-                console.log(error)
-        }
+      if (salonServices) {
+        res.json(salonServices);
+      }
+    } catch (error) {
+      console.log(error);
     }
- 
+  }
 
-    static async endActiveService(req,res,nex){
+  static async endActiveService(req, res, nex) {
+    try {
+      console.log(req.body.id);
+      let salonServices = await availedService.finishTheActiveService(
+        req.body.id
+      );
 
-        try {
-
-            console.log(req.body.id)
-            let salonServices=await availedService.finishTheActiveService(req.body.id)
-
-            if(salonServices==true){
-                res.json({messsage:"service is finished"})
-            }
-            
-            else{
-                res.json({messsage:"fail"})           
-             }
-            
-        } catch (error) {
-                console.log(error)
-        }
+      if (salonServices == true) {
+        res.json({ messsage: "service is finished" });
+      } else {
+        res.json({ messsage: "fail" });
+      }
+    } catch (error) {
+      console.log(error);
     }
-
-}
+  }
+};

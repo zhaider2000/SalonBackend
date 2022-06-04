@@ -1,130 +1,120 @@
-"use strict"
+"use strict";
 
-const servicesService=require('../Services/salon_services_service')
+const servicesService = require("../Services/salon_services_service");
 
-module.exports=class ServicesController{
+module.exports = class ServicesController {
+  static async createService(req, res, next) {
+    try {
+      console.log("here at service");
 
-    static async createService(req,res,next){
- 
-        try {
+      let newService = await servicesService.createService(req.body);
 
-            console.log("here at service")
-            
-            let newService=await servicesService.createService(req.body)
+      if (newService == true) {
+        res.json({ message: "success" }); //if true service is created succesfully
+      }
 
-            if(newService==true){
-                res.json({message:"success"}) //if true service is created succesfully
-            }
-            
-            if(newService==false){
-                res.json({message:"fail"}) //if false then any error occured therefore service is not created 
-            }
-            
-    
+      if (newService == false) {
+        res.json({ message: "fail" }); //if false then any error occured therefore service is not created
+      }
     } catch (error) {
-            console.log(error)
-        }
-
+      console.log(error);
     }
+  }
 
-    static async getServices(req,res,next){
-        try {
+  static async getServices(req, res, next) {
+    try {
+      let salonServices = await servicesService.getServices(req.query.id);
 
-            let salonServices=await servicesService.getServices(req.query.id)
-
-            if(salonServices==false){
-                res.json({message:"no services available right now"})
-            }
-            else{
-                res.json(salonServices)
-            }
-            
-        } catch (error) {
-                console.log(error)
-        }
+      if (salonServices == false) {
+        res.json({ message: "no services available right now" });
+      } else {
+        res.json(salonServices);
+      }
+    } catch (error) {
+      console.log(error);
     }
+  }
 
-    static async getActiveServices(req,res,next){
-        try {
-            console.log(req.query)
-            let activeServices=await servicesService.getActiveServices(req.query.id)
-            if(activeServices==false){
-                res.json({message:"no services available right now"})
-            }
-            else{
-                console.log("active Services",activeServices)
-                res.json(activeServices)
-            }
-        } catch (error) {
-            console.log(error)
-        }
+  static async getActiveServices(req, res, next) {
+    try {
+      console.log(req.query);
+      let activeServices = await servicesService.getActiveServices(
+        req.query.id
+      );
+      if (activeServices == false) {
+        res.json({ message: "no services available right now" });
+      } else {
+        console.log("active Services", activeServices);
+        res.json(activeServices);
+      }
+    } catch (error) {
+      console.log(error);
     }
+  }
 
-    static async getDropServices(req,res,next){
-        try {
-            console.log(req.query)
-            let dropServices=await servicesService.getDropServices(req.query.id)
-            if(dropServices==false){
-                res.json({message:"no services available right now"})
-            }
-            else{
-                console.log("active Services",dropServices)
-                res.json(dropServices)
-            }
-        } catch (error) {
-            console.log(error)
-        }
+  static async getDropServices(req, res, next) {
+    try {
+      console.log(req.query);
+      let dropServices = await servicesService.getDropServices(req.query.id);
+      if (dropServices == false) {
+        res.json({ message: "no services available right now" });
+      } else {
+        console.log("active Services", dropServices);
+        res.json(dropServices);
+      }
+    } catch (error) {
+      console.log(error);
     }
+  }
 
-
-    static async dropActiveService(req,res,next){
-        try {
-
-            const update=await servicesService.dropService(req.body.id)
-            if(update){
-                res.json({message:"service dropped"});
-
-            }
-            else{
-                res.json({message:"fail"})
-            }
-        } catch (error) {
-            console.log(error)
-        }
+  static async dropActiveService(req, res, next) {
+    try {
+      const update = await servicesService.dropService(req.body.id);
+      if (update) {
+        res.json({ message: "service dropped" });
+      } else {
+        res.json({ message: "fail" });
+      }
+    } catch (error) {
+      console.log(error);
     }
+  }
 
-
-    static async activeDropService(req,res,next){
-        try {
-
-            const update=await servicesService.activeService(req.body.id)
-            if(update){
-                res.json({message:"service active"});
-
-            }
-            else{
-                res.json({message:"fail"})
-            }
-        } catch (error) {
-            console.log(error)
-        }
+  static async activeDropService(req, res, next) {
+    try {
+      const update = await servicesService.activeService(req.body.id);
+      if (update) {
+        res.json({ message: "service active" });
+      } else {
+        res.json({ message: "fail" });
+      }
+    } catch (error) {
+      console.log(error);
     }
+  }
 
-    static async updateService(req,res,next){
-        try {
+  static async updateService(req, res, next) {
+    try {
+      const { name, description, amount, duration } = req.body;
 
-            const {name,description,amount,duration}=req.body
+      const updateSevice = await servicesService.updateService(req.body);
 
-            const updateSevice=await servicesService.updateService(req.query.id,name,description,amount,duration)
-            
-            if(updateSevice==true){
-                res.json({message:"Service updated sucessfully"})
-            }else{
-                res.json({message:"fail"})
-            }
-
-        } catch (error) {
-            console.log(error)
-        }
+      if (updateSevice == true) {
+        res.json({ message: "Service updated sucessfully" });
+      } else {
+        res.json({ message: "fail" });
+      }
+    } catch (error) {
+      console.log(error);
     }
-}
+  }
+
+  static async deleteService(req, res, next) {
+    try {
+      const updateAccounts = await servicesService.deleteService(req.body);
+      res.json({ message: "service deleted" });
+    } catch (error) {
+      res.send("there is error");
+    }
+  }
+};
