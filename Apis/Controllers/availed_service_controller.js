@@ -14,7 +14,7 @@ module.exports = class AvailedServic {
         http.get("http://localhost:3000/SendNotification");
       }
 
-      if (availedService == false) {
+      if (newAvailedService == false) {
         res.json({ messsage: "fail" });
       }
     } catch (error) {
