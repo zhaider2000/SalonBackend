@@ -21,14 +21,14 @@ module.exports = class AvailedServic {
         } else {
           console.log({ message: "No salon exist" });
         }
-        console.log("SalonName", salonInfo.name);
-        console.log(salonInfo);
+        let salonname = salonInfo.name;
         let userr = await userService.getUser(user);
-        console.log("USER", userr);
-        console.log("USER", userr.email);
-        let data = await sellProductService.getProductEmailDetail(req.body);
-        console.log("check", data);
-        await sendProductEmail(userr.email, "123");
+        let userEmailuserr = userr.email;
+        let { total, productsNames, prodcuctQuantityPairs } =
+          await sellProductService.getProductEmailDetail(req.body);
+        console.log("check1", productsNames);
+        console.log("check2", prodcuctQuantityPairs);
+        await sendProductEmail(userEmailuserr, salonname, total);
       }
 
       if (newSoldProdcut == false) {

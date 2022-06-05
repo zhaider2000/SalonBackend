@@ -184,7 +184,7 @@ module.exports = class sellProdctServices {
 
       // await newSellProduct.save()
 
-      return total;
+      return { total, productsNames, prodcuctQuantityPairs };
     } catch (error) {
       return false;
     }
