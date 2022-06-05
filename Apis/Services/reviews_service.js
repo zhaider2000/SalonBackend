@@ -4,44 +4,56 @@ const salonModel = require("../../Models/salon");
 module.exports = class ReviewService {
   static async createReview(body) {
     try {
-      conosle.log("REVIEWS");
+      console.log("here at review service");
 
-      const { rating, text, salons } = body;
-      console.log(rating);
-      console.log(text);
-      console.log(salons);
+      const { rating, text, salons, name } = body;
+
+      console.log(rating, text, salons, name);
 
       let reviewExist = await reviewModel.findOne({ salons: salons });
 
-                console.log("here at review service");
+      console.log(reviewExist);
 
-                const{rating,text,salons,name}=body
+      if (reviewExist) {
+        console.log("exist");
 
-                console.log(rating,text,salons,name);
+        let updateCount = reviewExist.count + 1;
 
-                let reviewExist=await reviewModel.findOne({salons:salons})
+        let updateTotal = reviewExist.total + rating;
 
-                console.log(reviewExist);
+        let updatedRating = (updateTotal / updateCount).toFixed(1);
 
-                if(reviewExist){
-
-                    console.log("exist")
-
-                    let updateCount=reviewExist.count+1
+        let updateReview = await reviewModel.findOneAndUpdate(
+          { salons: salons },
+          {
+            count: updateCount,
+            total: updateTotal,
+            $push: { texts: text, individualRatings: rating, name: name },
+          }
+        );
+        let updateSalon = await salonModel.findByIdAndUpdate(salons, {
+          rating: updatedRating,
+        });
 
         return true;
       }
       if (!reviewExist) {
+        console.log("dosent exist");
+
         let arrayOfRating = [rating];
 
         let arrayOfText = [text];
 
-                    let updateReview=await reviewModel.findOneAndUpdate({salons:salons},
-                        {
-                            count:updateCount,
-                            total:updateTotal,
-                            $push:{texts:text,individualRatings:rating,name:name}
-                        }
+        let arrayOfName = [name];
+
+        let newReview = new reviewModel({
+          salons,
+          count: 1,
+          total: rating,
+          texts: arrayOfText,
+          individualRatings: arrayOfRating,
+          name: arrayOfName,
+        });
 
         await newReview.save();
 
@@ -49,16 +61,16 @@ module.exports = class ReviewService {
           rating: rating,
         });
 
-                    console.log("dosent exist")
+        return true;
+      }
+    } catch (error) {
+      return false;
+    }
+  }
 
-
-                    let arrayOfRating=[rating]
-
-                    let arrayOfText=[text]
-
-                    let arrayOfName=[name]
-                    
-                    let newReview=new reviewModel({salons,count:1,total:rating,texts:arrayOfText,individualRatings:arrayOfRating,name:arrayOfName})
+  static async getReviews(id) {
+    try {
+      let reviews = await reviewModel.findOne({ salons: id });
 
       if (reviews.total) {
         return reviews;
