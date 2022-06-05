@@ -32,6 +32,7 @@ app.use(require("./Apis/Routes/availed_service_route"));
 app.use(require("./Apis/Routes/reviews_route"));
 app.use(require("./Apis/Routes/product_route"));
 app.use(require("./Apis/Routes/product_sell_route"));
+app.use(require("./Apis/Routes/notification_route"));
 
 app.use("/uploads", express.static(__dirname + "/uploads"));
 
