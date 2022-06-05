@@ -2,6 +2,7 @@
 const sellProductService = require("../Services/product_sell_service");
 const salonModel = require("../Services/salon_service");
 const userService = require("../Services/user_service");
+const sendProductEmail = require("../../email_verification");
 
 module.exports = class AvailedServic {
   static async sellProdcut(req, res, next) {
