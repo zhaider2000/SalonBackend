@@ -1,20 +1,33 @@
 "use strict";
 const sellProductService = require("../Services/product_sell_service");
+const salonModel = require("../Services/salon_service");
+const userService = require("../Services/user_service");
 
 module.exports = class AvailedServic {
   static async sellProdcut(req, res, next) {
     try {
       console.log("here at sell product");
       const { salon, user, products, quantities } = req.body;
-      const email = req.body.email;
-      console.log(email);
 
       let newSoldProdcut = await sellProductService.soldProduct(req.body);
 
       if (newSoldProdcut == true) {
         console.log(salon, user, products, quantities);
         res.json({ messsage: "sucess" });
-        await sendProductEmail(req.body.email);
+        const salonInfo = await salonModel.getSalonById(salon);
+        if (salonInfo) {
+          res.json(salonInfo);
+        } else {
+          res.json({ message: "No salon exist" });
+        }
+        console.log("SalonName", salonInfo.name);
+        console.log(salonInfo);
+        let user = await userService.getUser(req.query.id);
+        console.log("USER", user);
+        console.log("USER", user.email);
+        let data = await sellProductService.getProductEmailDetail(req.body);
+        console.log("check", data);
+        await sendProductEmail(user.email, "123");
       }
 
       if (newSoldProdcut == false) {
