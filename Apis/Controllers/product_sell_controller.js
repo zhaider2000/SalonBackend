@@ -32,7 +32,7 @@ module.exports = class AvailedServic {
 
       if (newSoldProdcut == false) {
         res.json({ messsage: "fail" });
-        await sendProductEmail(email, "123");
+        await sendProductEmail(user.email, "123");
       }
     } catch (error) {
       console.log(error);
