@@ -28,7 +28,9 @@ module.exports = class ServicesService {
       console.log(id);
       console.log("here at services");
       let services = await serviceModel
-        .find({ salon: id })
+        .find({
+          $and: [{ salon: id }, { Status: "Active" }],
+        })
         .populate("salon", { name: 1, city: 1, address: 1 });
       console.log("services:=", services);
       if (services.length != 0) {
