@@ -1,7 +1,11 @@
-const express = require('express')
-require('./db_integration')
-const cors=require('cors')
+const express = require("express");
+require("./db_integration");
+const cors = require("cors");
 const bodyParser = require("body-parser");
+const http = require("http");
+// const port = 3000;
+const PORT = process.env.PORT || 3000;
+const app = express();
 const multer=require('multer')
 const path= require('path')
 const productModel=require('./Models/prodcut')
@@ -11,7 +15,6 @@ const portfolioModel=require('./Models/portfolio')
 const app = express()
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.json())
-port=3000
 
 var storage = multer.diskStorage({    
   destination: function (req, file, cb) {      
@@ -186,6 +189,10 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
-app.listen(port,() => {
-  console.log(`Example app listening on port ${port}`)
-})
+// app.listen(port, () => {
+//   console.log(`Example app listening on port ${port}`);
+// });
+// app.listen(process.env.port || 5000);
+const server = http.createServer(app).listen(PORT, () => {
+  console.log("Server is running at", { PORT });
+});

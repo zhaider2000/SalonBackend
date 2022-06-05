@@ -1,11 +1,17 @@
-const reviewModel=require('../../Models/reviews')
-const salonModel=require('../../Models/salon')
+const reviewModel = require("../../Models/reviews");
+const salonModel = require("../../Models/salon");
 
-module.exports=class ReviewService{
+module.exports = class ReviewService {
+  static async createReview(body) {
+    try {
+      conosle.log("REVIEWS");
 
-    static async createReview(body){
+      const { rating, text, salons } = body;
+      console.log(rating);
+      console.log(text);
+      console.log(salons);
 
-            try {
+      let reviewExist = await reviewModel.findOne({ salons: salons });
 
                 console.log("here at review service");
 
@@ -23,9 +29,12 @@ module.exports=class ReviewService{
 
                     let updateCount=reviewExist.count+1
 
-                    let updateTotal=reviewExist.total + rating
+        return true;
+      }
+      if (!reviewExist) {
+        let arrayOfRating = [rating];
 
-                    let updatedRating=(updateTotal/updateCount).toFixed(1)
+        let arrayOfText = [text];
 
                     let updateReview=await reviewModel.findOneAndUpdate({salons:salons},
                         {
@@ -34,13 +43,11 @@ module.exports=class ReviewService{
                             $push:{texts:text,individualRatings:rating,name:name}
                         }
 
-                        )
-                    let updateSalon=await salonModel.findByIdAndUpdate(salons,{rating:updatedRating})        
+        await newReview.save();
 
-                    return true
-                
-                }
-                if(!reviewExist){
+        let updateSalon = await salonModel.findByIdAndUpdate(salons, {
+          rating: rating,
+        });
 
                     console.log("dosent exist")
 
@@ -53,37 +60,13 @@ module.exports=class ReviewService{
                     
                     let newReview=new reviewModel({salons,count:1,total:rating,texts:arrayOfText,individualRatings:arrayOfRating,name:arrayOfName})
 
-                    await newReview.save()
-
-                    let updateSalon=await salonModel.findByIdAndUpdate(salons,{rating:rating})
-
-                    return true
-
-                }
-
-                
-            } catch (error) {
-                
-                return false
-                
-            }
-
+      if (reviews.total) {
+        return reviews;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      return false;
     }
-
-    static async getReviews(id){
-        try {
-            
-            let reviews=await reviewModel.findOne({salons:id})
-
-            if(reviews.total){
-                return reviews
-            }
-            else{
-                return false
-            }
-
-        } catch (error) {
-                return false
-        }
-    }
-}
+  }
+};
