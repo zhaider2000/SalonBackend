@@ -27,12 +27,12 @@ module.exports = class AvailedServic {
         let { total, productsNames, prodcuctQuantityPairs } =
           await sellProductService.getProductEmailDetail(req.body);
         console.log("check1", productsNames);
-        console.log("check2", prodcuctQuantityPairs["productQuantity"]);
+        console.log("check2", prodcuctQuantityPairs.productQuantity);
         await sendProductEmail(
           userEmailuserr,
           salonname,
-          productsNames[0],
-          prodcuctQuantityPairs,
+          productsNames,
+          prodcuctQuantityPairs.productQuantity,
           total
         );
       }
