@@ -8,6 +8,8 @@ module.exports=class ReviewController{
 
             try {
 
+                console.log("here at review");
+
                 let newReview=await ReviewService.createReview(req.body)
 
                 if(newReview==true){

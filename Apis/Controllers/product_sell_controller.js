@@ -1,4 +1,6 @@
 'use strict'
+const sellProductService=require('../Services/product_sell_service');
+
 
 
 
@@ -8,13 +10,15 @@ module.exports=class AvailedServic{
 
         try {
 
-            let newSoldProdcut=await sellprodcutService.SoldProdcut(req.body)
+            console.log("here at sell product");
 
-            if(newAvailedService==true){
+            let newSoldProdcut=await sellProductService.soldProduct(req.body)
+
+            if(newSoldProdcut==true){
                 res.json({messsage:"sucess"})
             }
 
-            if(availedService==false){
+            if(newSoldProdcut==false){
 
                 res.json({messsage:"fail"})
             }

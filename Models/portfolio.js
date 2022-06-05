@@ -1,18 +1,13 @@
 const mongoose=require('mongoose')
 
-const products=new mongoose.Schema({
+const Portfolios=new mongoose.Schema({
 
     salon:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"salons"
     },
-
-    quantity:{
-        type:Number,
-    },
-
-    price:{
-        type:Number,
+    description: {
+        type:String
     },
     name: {
         type:String
@@ -23,5 +18,5 @@ const products=new mongoose.Schema({
 
 })
 
-const prodcuctModel=mongoose.model('products',products)
-module.exports=prodcuctModel
+const portfolioModel=mongoose.model('portfolios',Portfolios)
+module.exports=portfolioModel

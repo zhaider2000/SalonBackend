@@ -27,7 +27,7 @@ module.exports=class ProductController{
     static async getProducts(req,res,next){
         try {
 
-            let salonProducts=await productService.getProducts(req.body.id)
+            let salonProducts=await productService.getProducts(req.query.id)
 
             if(salonProducts==false){
                 res.json({message:"no services available right now"})

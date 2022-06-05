@@ -32,6 +32,9 @@ module.exports=class ProductService{
 
             let prodcuts=await productModel.find({salon:id}).populate("salon",{name:1,city:1,address:1})
             
+            console.log("Zain Haider")
+            console.log(prodcuts)
+
             if(prodcuts.length!=0){
                 return prodcuts
             }

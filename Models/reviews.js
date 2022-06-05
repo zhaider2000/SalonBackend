@@ -23,6 +23,11 @@ const reviews=new mongoose.Schema({
         {
             type:Number
         }
+    ],
+    name:[
+        {
+            type:String
+        }
     ]
 
 

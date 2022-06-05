@@ -2,7 +2,6 @@
 
 const sellProdcutModel=require('../../Models/product_sell')
 const prodcuctModel=require('../../Models/prodcut')
-const { get } = require( '../Routes/product_sell_route' )
 
 module.exports=class sellProdctServices{
 
@@ -19,14 +18,14 @@ module.exports=class sellProdctServices{
         }
     }
 
-    static getProdcutPrice(id){
+    static async getProdcutPrice(id){
         try {
             
             const product=await prodcuctModel.findById(id)
 
             console.log(product)
               
-            return product.price
+            return [product.price,product.name]
 
 
         } catch (error) {
@@ -36,16 +35,21 @@ module.exports=class sellProdctServices{
 
 
 
-    static async createAvailedService(body){
+    static async soldProduct(body){
 
         try {
 
+            console.log("here at sell product service");
+
             const {salon,user,products,quantities}=body
 
+            console.log(salon,user,products,quantities)
+
             let prodcuctQuantityPairs=[]
+            let productsNames=[]
             let total=0
 
-            for(let i=0;i<products.length-1;i++){
+            for(let i=0;i<products.length;i++){
                 let newObj={productId:products[i],productQuantity:quantities[i]}
                 prodcuctQuantityPairs.push(newObj)
             }
@@ -56,7 +60,8 @@ module.exports=class sellProdctServices{
                 const prodcuctQuantity=await this.getProdcutQuantity(productQuantityPair.productId)
             
                 if(prodcuctQuantity>=productQuantityPair.productQuantity){
-                    const prodcuctPrice=await this.getProdcutPrice(productQuantityPair.productId)
+                    const [prodcuctPrice,productName]=await this.getProdcutPrice(productQuantityPair.productId)
+                    productsNames.push(productName)
                     total=total+(prodcuctPrice*productQuantityPair.productQuantity)
                 }
 
@@ -64,7 +69,8 @@ module.exports=class sellProdctServices{
 
             let date=new Date()
 
-            let newSellProduct=new sellProdcutModel({salon,user,products,date,quantities,total})
+            console.log("products name",productsNames)
+            let newSellProduct=new sellProdcutModel({salon,user,product:products,date,quantity:quantities,total})
 
             await newSellProduct.save()
 

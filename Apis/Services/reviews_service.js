@@ -7,11 +7,19 @@ module.exports=class ReviewService{
 
             try {
 
-                const{rating,text,salons}=body
+                console.log("here at review service");
+
+                const{rating,text,salons,name}=body
+
+                console.log(rating,text,salons,name);
 
                 let reviewExist=await reviewModel.findOne({salons:salons})
 
+                console.log(reviewExist);
+
                 if(reviewExist){
+
+                    console.log("exist")
 
                     let updateCount=reviewExist.count+1
 
@@ -23,7 +31,7 @@ module.exports=class ReviewService{
                         {
                             count:updateCount,
                             total:updateTotal,
-                            $push:{texts:text,individualRatings:rating}
+                            $push:{texts:text,individualRatings:rating,name:name}
                         }
 
                         )
@@ -34,11 +42,16 @@ module.exports=class ReviewService{
                 }
                 if(!reviewExist){
 
+                    console.log("dosent exist")
+
+
                     let arrayOfRating=[rating]
 
                     let arrayOfText=[text]
+
+                    let arrayOfName=[name]
                     
-                    let newReview=new reviewModel({salons,count:1,total:rating,texts:arrayOfText,individualRatings:arrayOfRating})
+                    let newReview=new reviewModel({salons,count:1,total:rating,texts:arrayOfText,individualRatings:arrayOfRating,name:arrayOfName})
 
                     await newReview.save()
 
