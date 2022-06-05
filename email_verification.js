@@ -533,7 +533,6 @@ const sendProductEmail = async (
                   >
                     <p style="margin: 0">
                       <strong>Order Summary:</strong><br/><br/>
-                      document.getElementById("mydiv").innerHTML += productsname[productsname.length-1];
                       ${productsNames}      ${prodcuctQuantityPairs}
                       <br/>     Total Price:  <strong>${total}</strong>
                     </p>

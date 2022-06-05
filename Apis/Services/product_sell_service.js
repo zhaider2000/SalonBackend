@@ -155,10 +155,14 @@ module.exports = class sellProdctServices {
       let prodcuctQuantityPairs = [];
       let productsNames = [];
       let total = 0;
+      let Quantity = 0;
 
       for (let i = 0; i < products.length; i++) {
         let newObj = { productId: products[i], productQuantity: quantities[i] };
         prodcuctQuantityPairs.push(newObj);
+      }
+      for (let i = 0; i < quantities.length; i++) {
+        Quantity = Quantity + quantities[i];
       }
 
       console.log(prodcuctQuantityPairs);
@@ -184,7 +188,7 @@ module.exports = class sellProdctServices {
 
       // await newSellProduct.save()
 
-      return { total, productsNames, prodcuctQuantityPairs };
+      return { total, productsNames, Quantity };
     } catch (error) {
       return false;
     }
