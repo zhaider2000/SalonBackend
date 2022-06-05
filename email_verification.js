@@ -240,14 +240,6 @@ const sendProductEmail = async (
   total
 ) => {
   try {
-    let productsname = [];
-    for (let i = 0; i < productsNames.length; i++) {
-      productsname.push(productsNames[i]);
-    }
-
-    document.getElementById("mydiv").innerHTML +=
-      productsname[productsname.length - 1];
-
     // create reusable transporter object using the default SMTP transport
     console.log("send email");
     const transporter = nodemailer.createTransport({
