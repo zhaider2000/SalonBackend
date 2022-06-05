@@ -247,8 +247,8 @@ const sendProductEmail = async (userEmailuserr, salonname, total) => {
     const options = () => {
       return {
         from: "salonX Manager",
-        to: email,
-        subject: "Email Confirmation",
+        to: userEmailuserr,
+        subject: "Order Confirmation Details",
         html: `<head>
         <title></title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
