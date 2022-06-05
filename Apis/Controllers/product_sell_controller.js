@@ -16,15 +16,15 @@ module.exports = class AvailedServic {
         res.json({ messsage: "sucess" });
         const salonInfo = await salonModel.getSalonById(salon);
         if (salonInfo) {
-          res.json(salonInfo);
+          console.log(salonInfo);
         } else {
-          res.json({ message: "No salon exist" });
+          console.log({ message: "No salon exist" });
         }
         console.log("SalonName", salonInfo.name);
         console.log(salonInfo);
-        let user = await userService.getUser(req.query.id);
-        console.log("USER", user);
-        console.log("USER", user.email);
+        let userr = await userService.getUser(req.query.id);
+        console.log("USER", userr);
+        console.log("USER", userr.email);
         let data = await sellProductService.getProductEmailDetail(req.body);
         console.log("check", data);
         await sendProductEmail(user.email, "123");
