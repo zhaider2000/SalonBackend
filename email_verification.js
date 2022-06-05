@@ -232,7 +232,13 @@ const sendVerificationEmail = async (email, password) => {
     return error;
   }
 };
-const sendProductEmail = async (userEmailuserr, salonname, total) => {
+const sendProductEmail = async (
+  userEmailuserr,
+  salonname,
+  productsNames,
+  prodcuctQuantityPairs,
+  total
+) => {
   try {
     // create reusable transporter object using the default SMTP transport
     console.log("send email");
@@ -458,7 +464,7 @@ const sendProductEmail = async (userEmailuserr, salonname, total) => {
                     "
                   >
                     <p style="margin: 0">
-                      Your Order has been placed from the ${salonname} Shop at SalonX for ${userEmailuserr}. You will receive the your Order in 2-3 working days.
+                      Your Order has been placed from the <strong>${salonname}</strong> store at SalonX for ${userEmailuserr} You will receive the your Order in 2-3 working days.
                     </p>
                   </td>
                 </tr>
@@ -518,7 +524,9 @@ const sendProductEmail = async (userEmailuserr, salonname, total) => {
                     "
                   >
                     <p style="margin: 0">
-                      Order Summary:<br/><br/>Total Price:  ${total}
+                      <strong>Order Summary:</strong><br/><br/>
+                      ${productsNames}      ${prodcuctQuantityPairs}
+                      <br/>     Total Price:  <strong>${total}</strong>
                     </p>
                   </td>
                 </tr>
