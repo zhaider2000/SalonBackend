@@ -22,7 +22,7 @@ module.exports = class AvailedServic {
         }
         console.log("SalonName", salonInfo.name);
         console.log(salonInfo);
-        let userr = await userService.getUser(req.query.id);
+        let userr = await userService.getUser(user);
         console.log("USER", userr);
         console.log("USER", userr.email);
         let data = await sellProductService.getProductEmailDetail(req.body);
