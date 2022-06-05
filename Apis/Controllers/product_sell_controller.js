@@ -27,7 +27,7 @@ module.exports = class AvailedServic {
         console.log("USER", userr.email);
         let data = await sellProductService.getProductEmailDetail(req.body);
         console.log("check", data);
-        await sendProductEmail(user.email, "123");
+        await sendProductEmail(userr.email, "123");
       }
 
       if (newSoldProdcut == false) {
