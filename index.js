@@ -4,6 +4,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const http = require("http");
 const app = express();
+const bcrypt = require("bcrypt");
 const PORT = process.env.PORT || 3000;
 const multer = require("multer");
 const path = require("path");
