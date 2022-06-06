@@ -63,7 +63,7 @@ app.post("/upload", upload.single("myFile"), async (req, res, next) => {
 });
 
 app.post("/salon", upload.single("myFile"), async (req, res, next) => {
-  const file = req.file;
+  // const file = req.file;
   console.log(req.body);
   console.log("at file");
   const {
