@@ -11,6 +11,7 @@ const path = require("path");
 const productModel = require("./Models/prodcut");
 const portfolioModel = require("./Models/portfolio");
 const salonModel = require("./Models/salon");
+const availedModel = require("./Models/availed_service");
 
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
