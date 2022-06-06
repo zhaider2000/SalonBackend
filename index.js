@@ -76,7 +76,7 @@ app.post("/salon", upload.single("myFile"), async (req, res, next) => {
     maps,
     gender,
     image,
-  } = body;
+  } = req.body;
   console.log(image);
   let emailExist = await salonModel.find({ email: email });
   if (!file) {
@@ -102,6 +102,7 @@ app.post("/salon", upload.single("myFile"), async (req, res, next) => {
     });
     const savedsalon = await newSalon.save();
     res.json(savedsalon);
+    res.json({ message: "success" });
   }
 });
 
