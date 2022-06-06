@@ -10,7 +10,7 @@ router.get("/ActiveService", ServicesController.getActiveServices);
 router.get("/DropService", ServicesController.getDropServices);
 router.post("/dropActiveService", ServicesController.dropActiveService);
 router.post("/activeDropService", ServicesController.activeDropService);
-router.put("/service", ServicesController.updateService);
+router.post("/service", ServicesController.updateService);
 router.delete("/deleteService", ServicesController.deleteService);
 
 module.exports = router;

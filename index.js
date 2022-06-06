@@ -233,6 +233,17 @@ app.get("/CheckIfUserHasAvailedService", async (req, res, next) => {
   }
 });
 
+app.delete("/deleteportfolio", async (req, res, next) => {
+  let id = req.query.id;
+  const deletePortfolio = await portfolioModel.find({ _id: id });
+  res.json({ message: "portfolio deleted" });
+});
+app.delete("/deleteproducts", async (req, res, next) => {
+  let id = req.query.id;
+  const deletePortfolio = await productModel.find({ _id: id });
+  res.json({ message: "product deleted" });
+});
+
 app.get("/image", async (req, res) => {
   const image = await model.find();
   res.json(image);
