@@ -63,22 +63,12 @@ app.post("/upload", upload.single("myFile"), async (req, res, next) => {
   res.json(savedimage);
 });
 
-app.post("/salon", upload.single("myFile"), async (req, res, next) => {
-  // const file = req.file;
-  console.log(req.body);
+app.post("/salon", upload.single("file"), async (req, res, next) => {
+  const file = req.file;
+  console.log(file.filename);
   console.log("at file");
-  const {
-    name,
-    city,
-    address,
-    password,
-    email,
-    category,
-    maps,
-    gender,
-    myFile,
-  } = req.body;
-  const file = myFile;
+  const { name, city, address, password, email, category, maps, gender } =
+    req.body;
   let emailExist = await salonModel.find({ email: email });
   if (!file) {
     const error = new Error("Please upload a file");
