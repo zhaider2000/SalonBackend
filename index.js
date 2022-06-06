@@ -67,16 +67,17 @@ app.post("/salon", upload.single("myFile"), async (req, res, next) => {
   const file = req.file;
   console.log(file.filename);
   console.log("at file");
+  console.log(req.body);
   const { name, city, address, password, email, category, maps, gender } =
     req.body;
   let emailExist = await salonModel.find({ email: email });
   if (!file) {
     const error = new Error("Please upload a file");
     error.httpStatusCode = 400;
-    return next("hey error");
+    res.json({ message: "fail" });
   }
   if (emailExist.length != 0) {
-    return "salon with this email exist";
+    res.json({ message: "fail" });
   } else {
     let passwordHash = await bcrypt.hash(password, 10); //hash the password
 
@@ -92,7 +93,7 @@ app.post("/salon", upload.single("myFile"), async (req, res, next) => {
       image: file.path,
     });
     const savedsalon = await newSalon.save();
-    res.json(savedsalon);
+    // res.json(savedsalon);
     res.json({ message: "success" });
   }
 });
