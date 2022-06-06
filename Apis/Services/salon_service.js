@@ -144,10 +144,10 @@ module.exports = class SalonModel {
       console.log(error);
     }
   }
-  static async getSalonByGender(gender) {
+  static async getSalonByGender(gender, city) {
     try {
       let salons = await salon.find(
-        { gender: gender },
+        { $and: [{ gender: gender }, { city: city }] },
         { name: 1, address: 1, rating: 1, gender: 1, maps: 1, image: 1 }
       ); //DONT SHOW PASSWORD TO THE HTTP REQS
 

@@ -108,6 +108,7 @@ module.exports = class Account {
   static async getSalonByGender(req, res, next) {
     try {
       const gender = req.query.gender;
+      const city = req.query.city;
       const genderSalons = await salonModel.getSalonByGender(gender);
       if (genderSalons.length != 0) {
         res.json(genderSalons);
