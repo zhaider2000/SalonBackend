@@ -77,6 +77,7 @@ app.post("/salon", upload.single("myFile"), async (req, res, next) => {
     gender,
     myFile,
   } = req.body;
+  const file = myFile;
   let emailExist = await salonModel.find({ email: email });
   if (!file) {
     const error = new Error("Please upload a file");
