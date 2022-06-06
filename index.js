@@ -64,8 +64,20 @@ app.post("/upload", upload.single("myFile"), async (req, res, next) => {
 
 app.post("/salon", upload.single("myFile"), async (req, res, next) => {
   const file = req.file;
+  console.log(file);
   console.log("at file");
-  const { name, city, address, password, email, category, maps, gender } = body;
+  console.log(body);
+  const {
+    name,
+    city,
+    address,
+    password,
+    email,
+    category,
+    maps,
+    gender,
+    image,
+  } = body;
 
   let emailExist = await salonModel.find({ email: email });
   if (!file) {
@@ -83,7 +95,7 @@ app.post("/salon", upload.single("myFile"), async (req, res, next) => {
       city: city,
       address: address,
       password: passwordHash,
-      email,
+      email: email,
       category: category,
       maps: maps,
       gender: gender,
