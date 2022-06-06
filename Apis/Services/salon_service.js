@@ -51,6 +51,7 @@ module.exports = class SalonModel {
           gender: 1,
           rating: 1,
           category: 1,
+          image: 1,
         }
       ); //DONT SHOW PASSWORD TO THE HTTP REQS
 
@@ -123,7 +124,7 @@ module.exports = class SalonModel {
     try {
       let citySalons = await salon.find(
         { city: city },
-        { name: 1, address: 1, rating: 1, city: 1, maps: 1 }
+        { name: 1, address: 1, rating: 1, city: 1, maps: 1, image: 1 }
       ); //DONT SHOW PASSWORD TO THE HTTP REQS
 
       return citySalons;
@@ -135,7 +136,7 @@ module.exports = class SalonModel {
     try {
       let salons = await salon.find(
         { category: category },
-        { name: 1, address: 1, rating: 1 }
+        { name: 1, address: 1, rating: 1, image: 1 }
       ); //DONT SHOW PASSWORD TO THE HTTP REQS
 
       return salons;
@@ -147,7 +148,7 @@ module.exports = class SalonModel {
     try {
       let salons = await salon.find(
         { gender: gender },
-        { name: 1, address: 1, rating: 1, gender: 1, maps: 1 }
+        { name: 1, address: 1, rating: 1, gender: 1, maps: 1, image: 1 }
       ); //DONT SHOW PASSWORD TO THE HTTP REQS
 
       return salons;
@@ -160,7 +161,7 @@ module.exports = class SalonModel {
     try {
       let salon = await salonModel.findOne(
         { _id: id },
-        { name: 1, address: 1, rating: 1, gender: 1, maps: 1 }
+        { name: 1, address: 1, rating: 1, gender: 1, maps: 1, image: 1 }
       ); //DONT SHOW PASSWORD TO THE HTTP REQS
 
       return salon;
