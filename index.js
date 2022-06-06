@@ -35,6 +35,7 @@ app.use(require("./Apis/Routes/reviews_route"));
 app.use(require("./Apis/Routes/product_route"));
 app.use(require("./Apis/Routes/product_sell_route"));
 app.use(require("./Apis/Routes/notification_route"));
+app.use(require("./Apis/Routes/admin_route"));
 
 app.use("/uploads", express.static(__dirname + "/uploads"));
 
@@ -214,6 +215,19 @@ app.get("/Portfolio", async (req, res, next) => {
     }
   } catch (error) {
     console.log(error);
+    res.json({ message: "fail" });
+  }
+});
+
+app.get("/CheckIfUserHasAvailedService", async (req, res, next) => {
+  const { salon, user } = req.query;
+  let availedService = await availedModel.find({
+    $and: [{ status: "Finished" }, { users: user }, { salons: salon }],
+  });
+
+  if (availedService.length != 0) {
+    res.json({ message: "sucess" });
+  } else {
     res.json({ message: "fail" });
   }
 });

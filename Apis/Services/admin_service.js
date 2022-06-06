@@ -11,12 +11,13 @@ module.exports = class AdminService {
         return { message: "Email Already Exist" };
       } else {
         let passwordHash = await bcrypt.hash(data.password, 10);
+        let confirmhash = await bcrypt.hash(data.confirm, 10);
 
         const newAdmin = {
           name: data.name,
           email: data.email,
           password: passwordHash,
-          confirm: data.confirm,
+          confirm: confirmhash,
           phone: data.phone,
           work: data.work,
         };

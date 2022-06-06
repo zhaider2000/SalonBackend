@@ -38,6 +38,7 @@ module.exports = class Admin {
   static async login_admin(req, res, next) {
     try {
       let { email, password } = req.body;
+      console.log(email, password);
 
       if (!email || !password) {
         res.json({ message: "Fill The Full Form" });
