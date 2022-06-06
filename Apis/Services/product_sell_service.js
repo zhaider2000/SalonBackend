@@ -2,6 +2,9 @@
 
 const sellProdcutModel = require("../../Models/product_sell");
 const prodcuctModel = require("../../Models/prodcut");
+const userService = require("../Services/user_service");
+const salonModel = require("../Services/salon_service");
+const sendProductEmail = require("../../email_verification");
 
 module.exports = class sellProdctServices {
   static async getProdcutQuantity(id) {
@@ -154,15 +157,13 @@ module.exports = class sellProdctServices {
 
       let prodcuctQuantityPairs = [];
       let productsNames = [];
+      let productQunat = [];
+      let outOfQuant = [];
       let total = 0;
-      let Quantity = 0;
 
       for (let i = 0; i < products.length; i++) {
         let newObj = { productId: products[i], productQuantity: quantities[i] };
         prodcuctQuantityPairs.push(newObj);
-      }
-      for (let i = 0; i < quantities.length; i++) {
-        Quantity = Quantity + quantities[i];
       }
 
       console.log(prodcuctQuantityPairs);
@@ -176,19 +177,63 @@ module.exports = class sellProdctServices {
           const [prodcuctPrice, productName] = await this.getProdcutPrice(
             productQuantityPair.productId
           );
+          let newQuant = prodcuctQuantity - productQuantityPair.productQuantity;
+          await prodcuctModel.findByIdAndUpdate(
+            { _id: productQuantityPair.productId },
+            { quantity: newQuant }
+          );
           productsNames.push(productName);
+          productQunat.push(productQuantityPair.productQuantity);
           total = total + prodcuctPrice * productQuantityPair.productQuantity;
+        } else {
+          const [prodcuctPrice, productName] = await this.getProdcutPrice(
+            productQuantityPair.productId
+          );
+          outOfQuant.push(productName);
         }
       }
 
       let date = new Date();
 
       console.log("products name", productsNames);
-      // let newSellProduct=new sellProdcutModel({salon,user,product:products,date,quantity:quantities,total})
+      let newSellProduct = new sellProdcutModel({
+        salon,
+        user,
+        product: products,
+        date,
+        quantity: quantities,
+        total,
+      });
 
-      // await newSellProduct.save()
+      await newSellProduct.save();
 
-      return { total, productsNames, Quantity };
+      let sum = 0;
+
+      for (i = 0; i < productQunat.length; i++) {
+        sum += productQunat[i];
+      }
+      const salonInfo = await salonModel.getSalonById(salon);
+      let salonEmail = salonInfo.email;
+      let salonname = salonInfo.name;
+      let userr = await userService.getUser(user);
+      let userEmailuserr = userr.email;
+
+      await sendProductEmail(
+        userEmailuserr,
+        salonname,
+        productsNames,
+        sum,
+        total
+      );
+
+      await sendProductEmail(salonEmail, salonname, productsNames, sum, total);
+
+      if (outOfQuant != 0) {
+        await sendoutofProductEmail(userEmailuserr, salonname, outOfQuant);
+        await sendoutofProductEmail(salonEmail, salonname, outOfQuant);
+      }
+
+      return true;
     } catch (error) {
       return false;
     }
