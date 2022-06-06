@@ -63,7 +63,7 @@ app.post("/upload", upload.single("myFile"), async (req, res, next) => {
   res.json(savedimage);
 });
 
-app.post("/salon", upload.single("file"), async (req, res, next) => {
+app.post("/salon", upload.single("myFile"), async (req, res, next) => {
   const file = req.file;
   console.log(file.filename);
   console.log("at file");
