@@ -525,7 +525,8 @@ const sendProductEmail = async (
                   >
                     <p style="margin: 0">
                       <strong>Order Summary:</strong><br/><br/>
-                      ${productsNames}      ${prodcuctQuantityPairs}
+                      ${productsNames}      
+                      <br/>     Total Quantity:  <strong>${prodcuctQuantityPairs}</strong>
                       <br/>     Total Price:  <strong>${total}</strong>
                     </p>
                   </td>

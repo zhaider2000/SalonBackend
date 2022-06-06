@@ -4,7 +4,7 @@ const express = require("express");
 const router = express.Router();
 const salonController = require("../Controllers/salon_controller");
 
-router.post("/salon", salonController.createSalon);
+// router.post("/salon", salonController.createSalon);
 router.post("/RequestSalon", salonController.requestSalon);
 router.put("/salon", salonController.updateSalon);
 router.post("/LoginSalon", salonController.loginSalon);

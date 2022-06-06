@@ -9,6 +9,7 @@ const multer = require("multer");
 const path = require("path");
 const productModel = require("./Models/prodcut");
 const portfolioModel = require("./Models/portfolio");
+const salonModel = require("./Models/salon");
 
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
@@ -59,6 +60,38 @@ app.post("/upload", upload.single("myFile"), async (req, res, next) => {
 
   const savedimage = await imagepost.save();
   res.json(savedimage);
+});
+
+app.post("/salon", upload.single("myFile"), async (req, res, next) => {
+  const file = req.file;
+  console.log("at file");
+  const { name, city, address, password, email, category, maps, gender } = body;
+
+  let emailExist = await salonModel.find({ email: email });
+  if (!file) {
+    const error = new Error("Please upload a file");
+    error.httpStatusCode = 400;
+    return next("hey error");
+  }
+  if (emailExist.length != 0) {
+    return "salon with this email exist";
+  } else {
+    let passwordHash = await bcrypt.hash(password, 10); //hash the password
+
+    const newSalon = new salonModel({
+      name: name,
+      city: city,
+      address: address,
+      password: passwordHash,
+      email,
+      category: category,
+      maps: maps,
+      gender: gender,
+      image: file.path,
+    });
+    const savedsalon = await newSalon.save();
+    res.json(savedsalon);
+  }
 });
 
 app.post("/updateProduct", upload.single("myFile"), async (req, res, next) => {
