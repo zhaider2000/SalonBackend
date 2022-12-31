@@ -109,7 +109,7 @@ module.exports = class Account {
     try {
       const gender = req.query.gender;
       const city = req.query.city;
-      const genderSalons = await salonModel.getSalonByGender(gender);
+      const genderSalons = await salonModel.getSalonByGender(gender,city);
       if (genderSalons.length != 0) {
         res.json(genderSalons);
       } else {
