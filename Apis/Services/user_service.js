@@ -8,9 +8,9 @@ module.exports=class UserService{
 
         try {
 
-            const {name,email,phone,id}=body
+            const {name,email,phone,id,city}=body
             console.log(name,email,phone,id)
-            let newUser=new user({_id:id,name,email,phone})
+            let newUser=new user({_id:id,name,email,phone,city})
             await newUser.save()
             return true
             
