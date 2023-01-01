@@ -9,7 +9,7 @@ module.exports = class SalonModel {
   static async createSalon(body) {
     try {
 
-      const images=['uploads\2022-06-06T09-36-59.378Zsana.jfif','uploads\2022-06-06T09-36-59.378Zkashees.jpg','uploads\2022-06-06T09-36-59.378Zsalon.jpg','uploads\2022-06-06T09-36-59.378Zpassion.jpg']
+      const images=['uploads\\2022-06-06T09-36-59.378Zsana.jfif','uploads\\2022-06-06T09-36-59.378Zkashees.jpg','uploads\\2022-06-06T09-36-59.378Zsalon.jpg','uploads\\2022-06-06T09-36-59.378Zpassion.jpg']
       const { name, city, address, password, email, category, maps, gender } =
         body;
 
