@@ -15,6 +15,9 @@ const user=new mongoose.Schema({
     phone:{
         type:String,
         require:true
+    },
+    city:{
+        type:String
     }
 })
 
